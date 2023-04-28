@@ -96,4 +96,83 @@ bool boggleHelper(const std::set<std::string>& dict, const std::set<std::string>
 {
 //add your solution here!
 
+	//1. Base Case (past board size, or not a prefix)
+	if(prefix.count(word) == 0 || r >= board.size() || c >= board.size()){
+		//not prefix but in dict
+		if (dict.count(word) > 0){
+			//valid word --> enter into set
+			result.insert(word);
+			//valid subtree
+			return true;
+		}
+		//otherwise not valid
+		return false;
+	}
+
+	//2. Not past board size and a prefix
+	if (boggleHelper(dict, prefix, board, word+board[r][c], result, r+dr, c+dc, dr, dc) == true){
+		//valid subtree (continue to recurse)
+		return true;
+	}
+	//valid word
+	else if (dict.count(word) > 0){
+		//insert and return true
+		result.insert(word);
+		return true;
+	}
+	return false;
+	
+
+//--------------------------------------------------
+	// //1. Base Case (if past end of board)
+	// if( (r >= board.size()) || (c >= board.size())){
+	// 	//return false
+	// 	return false;
+	// }
+	
+	// //2. add letter to word
+	// word += board[r][c];
+
+	// //3. check if word is prefix
+	// if(prefix.find(word) != prefix.end){
+
+	// 	//check if word is in dict
+	// 	if(dict.find(word) != dict.end){
+	// 		//only enter into result set if next iteration does not return true (aka next iteration is not a word or a prefix // or end)
+	// 		if(boggleHelper(dict, prefix, board, word, result, r+dr, c+dc, dr, dc) == false){
+	// 			//add to result
+	// 			result.push_back(word);
+	// 			return true;
+	// 		}
+	// 		//otherwise continue to recurse cause valid tree next
+	// 		else{
+	// 			boggleHelper(dict, prefix, board, word, result, r+dr, c+dc, dr, dc);
+	// 		}
+	// 	}
+	// 	//if not in dict continue recursing
+	// 	else{
+	// 		boggleHelper(dict, prefix, board, word, result, r+dr, c+dc, dr, dc);
+	// 	}
+	// }
+	// //4. check if word is in dict
+	// else if (dict.find(word) != dict.end ){
+	// 	//only enter into result set if next iteration does not return true (aka next iteration is not a word or a prefix // or end)
+	// 	if(boggleHelper(dict, prefix, board, word, result, r+dr, c+dc, dr, dc) == false){
+	// 		//add to result
+	// 		result.push_back(word);
+	// 		return true;
+	// 	}
+	// 	//otherwise continue to recurse cause valid tree next
+	// 	else{
+	// 		boggleHelper(dict, prefix, board, word, result, r+dr, c+dc, dr, dc);
+	// 	}
+	// }
+	// //5. not a prefix or in dictionary
+	// else{
+	// 	//iterate to next letter
+	// 	word = "";
+	// 	boggleHelper(dict, prefix, board, word, result, r+dr, c+dc, dr, dc);
+	// 	return false;
+	// }
+
 }
